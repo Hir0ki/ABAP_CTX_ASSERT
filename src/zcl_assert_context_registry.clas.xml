@@ -3,15 +3,13 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOCLASS>
-    <CLSNAME>ZCX_CTX_ASSERT</CLSNAME>
+    <CLSNAME>ZCL_ASSERT_CONTEXT_REGISTRY</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Main Assert class</DESCRIPT>
-    <CATEGORY>40</CATEGORY>
+    <DESCRIPT>holds all currently acvtive context</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>
     <UNICODE>X</UNICODE>
-    <WITH_UNIT_TESTS>X</WITH_UNIT_TESTS>
    </VSEOCLASS>
   </asx:values>
  </asx:abap>
