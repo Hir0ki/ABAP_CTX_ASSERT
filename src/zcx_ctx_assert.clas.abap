@@ -20,68 +20,68 @@ CLASS zcx_ctx_assert DEFINITION
       IMPORTING
         iv_act     TYPE any
         iv_exp     TYPE any
-        iv_message TYPE string OPTIONAL
+        iv_message TYPE zctx_assert_message OPTIONAL
         iv_context TYPE REF TO zif_ctx_assert_context OPTIONAL.
 
     CLASS-METHODS assert_bound
       IMPORTING
         iv_act     TYPE any
-        iv_message TYPE string OPTIONAL
+        iv_message TYPE zctx_assert_message OPTIONAL
         iv_context TYPE REF TO zif_ctx_assert_context OPTIONAL.
 
     CLASS-METHODS assert_not_bound
       IMPORTING
         iv_act     TYPE any
-        iv_message TYPE string OPTIONAL
+        iv_message TYPE zctx_assert_message OPTIONAL
         iv_context TYPE REF TO zif_ctx_assert_context OPTIONAL.
 
     CLASS-METHODS assert_initial
       IMPORTING
         iv_act     TYPE any
-        iv_message TYPE string OPTIONAL
+        iv_message TYPE zctx_assert_message OPTIONAL
         iv_context TYPE REF TO zif_ctx_assert_context OPTIONAL.
 
     CLASS-METHODS assert_not_initial
       IMPORTING
         iv_act     TYPE any
-        iv_message TYPE string OPTIONAL
+        iv_message TYPE zctx_assert_message OPTIONAL
         iv_context TYPE REF TO zif_ctx_assert_context OPTIONAL.
 
     CLASS-METHODS assert_subrc
       IMPORTING
         iv_act     TYPE int4
-        iv_message TYPE string OPTIONAL
+        iv_message TYPE zctx_assert_message OPTIONAL
         iv_context TYPE REF TO zif_ctx_assert_context OPTIONAL.
 
     CLASS-METHODS assert_true
       IMPORTING
         iv_act     TYPE any
-        iv_message TYPE string OPTIONAL
+        iv_message TYPE zctx_assert_message OPTIONAL
         iv_context TYPE REF TO zif_ctx_assert_context OPTIONAL.
 
     CLASS-METHODS assert_false
       IMPORTING
         iv_act     TYPE any
-        iv_message TYPE string OPTIONAL
+        iv_message TYPE zctx_assert_message OPTIONAL
         iv_context TYPE REF TO zif_ctx_assert_context OPTIONAL.
 
     CLASS-METHODS assert_differs
       IMPORTING
         iv_act     TYPE any
         iv_exp     TYPE any
-        iv_message TYPE string OPTIONAL
+        iv_message TYPE zctx_assert_message OPTIONAL
         iv_context TYPE REF TO zif_ctx_assert_context OPTIONAL.
 
     CLASS-METHODS fail
       IMPORTING
-        iv_message TYPE string OPTIONAL
+        iv_message TYPE zctx_assert_message OPTIONAL
         iv_context TYPE REF TO zif_ctx_assert_context OPTIONAL.
 
 
   PRIVATE SECTION.
     CLASS-METHODS handle_messages
       IMPORTING
-        iv_message        TYPE string
+        iv_message        TYPE zctx_assert_message
         iv_exception_uuid TYPE zctx_assert_uuid_char
         iv_passed_context TYPE REF TO zif_ctx_assert_context OPTIONAL.
 
@@ -110,16 +110,16 @@ CLASS zcx_ctx_assert IMPLEMENTATION.
         DATA(lv_header) = cl_bali_header_setter=>create( object = 'ZCXT_ASSERT'
                                        subobject = 'ZASSERT'
                                        external_id = CONV #( iv_exception_uuid ) ).
-       lo_log_handler->set_header( lv_header ).
+        lo_log_handler->set_header( lv_header ).
 
-       lo_log_handler->add_item(  CL_BALI_FREE_TEXT_SETTER=>create( text = 'Test' ) ).
+        lo_log_handler->add_item(  cl_bali_free_text_setter=>create( text = iv_message ) ).
 
         cl_bali_log_db=>get_instance( )->save_log( log = lo_log_handler use_2nd_db_connection = abap_true ).
-
 
       CATCH cx_bali_runtime.
         "handle exception
     ENDTRY.
+
   ENDMETHOD.
 
   METHOD are_asserts_on.
